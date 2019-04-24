@@ -1,0 +1,179 @@
+su root 进入超级用户
+exit 退出
+root/123456
+getconf LONG_BIT  查看Linux系统位数
+进入llg用户 su llg 密码：123456
+
+ubantu jdk配置：
+0.在/usr/java/下把jdk解压
+1. 在home的用户主目录的.bashrc文件中末尾添加如下几条：
+export JAVA_HOME=/usr/java/jdk1.8.0_11
+export JRE_HOME=$JAVA_HOME/jre
+export CLASSPATH=.:$CLASSPATH:$JAVA_HOME/lib:$JRE_HOME/lib
+export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
+2. source .bashrc 让其生效
+3. java -version 查看
+
+linux下redis启动脚本位置：/usr/local/redis/bin  再进行启动和使用
+windows下启动redis服务：命令窗口下进入其目录。F:    cd 路径      启动输入： redis-server redis.windows.conf   使用：redis-cli.exe
+连接后使用info 查看内存情况， 使用ctr+c ，启动窗口关闭redis，连接窗口退出连接
+
+查看防火墙状态：sudo ufw status
+
+
+linux笔记
+
+新建一台虚拟机时，root密码随机的，先sudo passwd  输入当前用户密码   在输入新密码就是root的密码
+
+1.echo默认换行 加参数 -e 使换行符\n生效  eg:echo -e “my name is liulg\n\n\n”
+2，把脚本内容转存到mylog.txt文件中    echo "what that..">mylog.txt 使用>会覆盖文件中内容，如果使用>>是追加在文尾，不覆盖
+3.从键盘读入内容到脚本中：
+#！bin/sh
+echo -n "first name:"      #-n 不换行
+read firstname
+echo -n "last name:"
+read lastname
+echo -e "your firstname: $firstname\n"
+echo -e "your lastname: $lastname\n"
+4.判断，注意if、[]都有空格隔开：
+#!/bin/sh
+if [ "100" -lt "110" ]
+then
+echo ssss
+echo "your name:"
+read name
+if [ "$name" = "" ] || [ -z $name ]
+then
+echo "not a name"
+else
+echo "name is:$name"
+fi
+fi
+5.find /apps -name "/apps/bin" -prune -o -print  在apps下查找文件，但忽略apps下的bin目录
+6.ls [mt]*  列出以m或者t开头的文件
+7.cat mul.sh move.sh > view.sh  把两个文件的内容拷贝到一个文件中去
+8.cat move.sh |tee -a view.sh     查看并保存到view.sh文件中， -a是追加到文尾
+9.命令太长时采用在第一排末尾加反斜杠\写作两排
+10.cat abc.doc ccc.doc 1>abc.out 2>ccc.error  1为标准输出，2为错误输出，意思是把两个文件合并放到.out中，出错了就把错误信息放到.error中
+11.cat abc.doc >abc.out 2>&1  把标准输出和标准错误都存到1个文档里
+12.A&&B   A为true,执行B      A||B    A为false，执行B
+13.匹配A出现3次     A\{3\}   匹配A至少出现3次    A\{3,\}    匹配A出现n到m次    A\{n,m}
+14.grep -i "n" view.sh 查找文件中含有n的行，  -i表示大小写不敏感
+15.创建链接     ln -s /home/llg/pk/aa/for.sh m.sh   创建m.sh指向for.sh,类似指针，运行m.sh 时就是在运行for.sh
+16.grep -c "echo" mul.sh   统计文件中含有匹配字段的行数
+17.grep 'new' . -r --include *.{py,sh,txt}    递归查找当前目录下含有new的行，从这三个后缀文件中
+18.awk 'END{print NR}' wow.sh 统计文件行数
+19.seq 5 表示列出1到5，是单独列出1到5的简化写法
+20.awk 'BEGIN{a=5;print (a+=1+2+3)}'  答案为10，+=优先级最低
+21.DT=`date +%Y%m%d`   20170823
+22.sed -n  '1,3p' input.txt 指定打印文件中的某些行
+23.test -w my.sh 或 [ -w my.sh ]    echo $?  (两条语句)测试文件是否可写，0表示成功，其他失败
+24.test命令:  -a  逻辑与   -o 逻辑或  [ -w wow.sh -a -w wow1.sh ]       [ -w wow.sh -o -w wow1.sh ]
+25.=判断字符串相等   ！=不等   -z 空串  -n 非空串
+26.测试数值： -eq 相等  -ne 不相等   -gt(>)    -lt(<)    -le(<=)   -ge(>=)
+27.expr 10 \* 10   expr命令行计算器
+28.expr &num + 10 &> /dev/null   STATUS=$?   STATUS为0，为数值
+29.a=`expr &a + &b`   用反引号，计算并赋值  或a=$( expr $n + $b )
+30.grep -rl "sss"   在当前目录下查找含有sss的文件
+31.crontab -l 查看定时任务  -e 编辑定时任务  -r 删除定时任务     （编辑完后加一个空白行）
+32.命令用反引号括起来，如 `date +%Y`
+33.echo>filename   清空文件内容    echo>test.java
+34.md5sum test.py|cut -b 1-32>201.md5   把加密后的文件截取32位长度转存到201.md5中
+35.oerr ora 01122     oracle报错提示解释
+36.netstat -an|grep 103.160.178.50   查看是否有连接这个ip  netstat  -na|grep 80  查看有80端口的信息
+37.grep "IC0031 0002994" tran* |grep "the send msg is"  查询
+38.tar -cvf *.tar  filename  打包    目的文件  源文件
+39.tar -xvf *.tar  解压文件
+40.md5sum m.sh > m.md5   linux生成md5文件，aix为csum
+41.df -k       -m查看已挂载磁盘的总容量、使用容量与inode等等
+42.wc -l filename     统计文件行数
+43.cat /proc/version    或者 uname -a   查看版本信息
+44.tail -n 100  tranIC0008      查看最后100行信息
+45.find . -name "Sys*"    寻找当前目录下含有Sys的
+46.chmod 4755 test.txt     2755    1755      4为SUID   2为SGID（前两者不安全）    1为sticky bit  所有者及root才能删除
+47.compress book.txt   压缩为.z文件并替代原文件      解压缩加上 -d 参数
+48.cat  tranIC0008|grep IC0000  或grep 'IC0000' tranIC0008   打印出含有  IC0000的信息
+49.number1=3+2     输出3+2
+    declare -i  number2=3+2   输出5
+50.date +%F   日期以2018-01-11格式显示
+51.gcc -o  sort sort.c   编译      javac   car.java   编译    java car   运行
+52.chmod g-r,o-r abc.txt    去掉同组和其他的读权限
+53.cp -p   -p参数将子目录一起复制
+54.chown llg:llg test.txt    把test.txt 的用户及组更改为llg,在它原用户下执行更改
+    chown llg: test.txt  都会改变，和前者一样    chown :llg test.txt 只会更改组，另一方法    chgrp -v test.txt llg
+55.mkdir -p   创建多级目录
+56.正则表达式： a{3,4} 匹配aaa和aaaa    [^a-z]    匹配除小写字母外的任意字符  ^[a-z] 匹配任意小写字母   hello$   匹配以hello结尾的，^匹配头部  $匹配尾部
+     :1,$ s/x/y/g   vi进入文件，命令行模式下输入，把所有x替换为y     grep '\<IC0000\>' tranIC0000   查找含有IC0000的行
+57.${#name[*]}   返回数组元素个数   ${#name[num]}  返回数组某个元素的长度，name为数组名，num为下标
+58.在设置定时脚本时，  */1 * * * * /home/llg/test/m.sh  在m.sh脚本中再次调用脚本时，可能不会生效，是路径问题。解决：定时任务写为   */1 * * * * cd /home/llg/test/m.sh && ./m.sh  要在它所在的目录下去执行
+59.备份操作   cp --force --backup=numbered test.py test.py
+60.创建用户 sudo adduser llg        进入用户   su  llg       退出用户    exit
+   另一种创建方式    sudo useradd -s /bin/bash -g Hy -d /home/Hy -m Hy         -s使用什么解析器 -g属于哪个组 -d在哪个目录下  -m 没有就创建
+   如果报用户组不存在，就添加一个   sudo groupadd Hy      添加或者修改一个密码   sudo  passwd Hy
+61.删除用户   sudo deluser  用户名
+   另一种删除方式    sudo userdel -r 用户名
+62.ftp服务器搭建   修改配置文件
+63. scp 命令  目标主机已经成功安装openssh-server
+    scp -r 目标用户名@目标主机ip地址:/目标文件的绝对路径 /保存到本机的绝对（相对）路径
+	拷贝目录需要加-r参数
+64.ctrl+l  清屏    clear命令也是
+65.env | grep PATH  指定查看PATH环境变量
+66.vim命令模式下操作，光标的移动  H前   J下    K上   L后  
+   光标的移动   文件首 gg   文件尾  shift+g    
+   查找  /123ww   光标所在位置向下查找，最下边之后，返回头部     ?123ww   光标所在位置向上查找，顶部之后返回尾部    遍历用n 或者N
+67.lsof -i :6379 查看端口进程
+68. nohup aaa.sh >> log.out 2&1 &   进程在终端退出还不会结束，使用nohup   最后的&表示命令不会结束，配合使用
+69.cat-A a.txt 每一行是$符号结尾，则为unix格式，dos格式的文件行尾为^M$ ，  第二种查看格式方法：  vi a.txt   :set ff
+70.cat > file.txt << EOF    cat可以直接从标准输入读取数据，然后写到文件里面
+71.scp zookeeper-3.4.6.jar root@192.168.159.130:/usr      linux之间的拷贝
+72.du -sk filename 查看指定文件大小
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
