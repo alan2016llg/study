@@ -10,3 +10,4 @@
 * linux.txt  
 学习linux使用到的一些命令.  
 * [git远程推送失败解决](https://www.cnblogs.com/wmr95/p/7852832.html)
+* [简单易懂的git学习教程](https://backlog.com/git-tutorial/cn/intro/intro1_1.html)
