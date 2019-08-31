@@ -127,6 +127,15 @@ fi
 70.cat > file.txt << EOF    cat可以直接从标准输入读取数据，然后写到文件里面
 71.scp zookeeper-3.4.6.jar root@192.168.159.130:/usr      linux之间的拷贝
 72.du -sk filename 查看指定文件大小
+73.find . |xargs grep -ri 'V016' -l 查找所有文件中含有V016的文件
+74.netstat -anp|grep 30010 找到pid; cd /proc/10327 进入pid目录; ls -ail 找到程序的全路径信息
+75.top -c 找到进程 ；jstack -l 1517 > dump.txt 打印该进程的线程堆栈信息; 
+   ps -mp 1517 -o THREAD,tid,time >  dump-1.txt 当前进程的cpu使用情况 ;
+   printf "%x\n" 1523 线程id的16进制，去dump.txt中搜索此id；
+76.top -Hp 25651 查看进程下的各线程信息
+   pstree -p 25651 查看线程树
+77.ps -ax|grep 32764   查看PID所对应的应用程序
+78.java -verbose:class 6754    查看java进程为6754的程序加载了哪些jar
 
 
 
