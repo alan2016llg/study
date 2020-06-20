@@ -16,12 +16,5 @@ git pull origin master
 11111111
 
 使用同一个ssh进行连接
-=======
-abc by issue2
 
-22
-
-
-555
-44444
 
